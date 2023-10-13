@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  creationTimestamp: null
+  name: show-date
+spec:
+  jobTemplate:
+    metadata:
+      creationTimestamp: null
+      name: show-date
+    spec:
+      template:
+        metadata:
+          creationTimestamp: null
+        spec:
+          containers:
+          - image: busybox
+            name: show-date
+            command: ["bin/sh", "-c", "echo Current date: $(date)"]
+            resources: {}
+          restartPolicy: OnFailure
+  schedule: '*/1 * * * *'
+status: {}

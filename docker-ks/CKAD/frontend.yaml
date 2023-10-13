@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: frontend
+  name: frontend
+  namespace: kdpd00201
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: frontend
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: frontend
+        func: webFrontEnd  
+    spec:
+      containers:
+      - image: lfccncf/nginx:1.13.7
+        name: nginx
+        ports:
+        - containerPort: $NGINX__PORT  
+        env:
+        - name: NGINX__PORT  
+          value: "8080" 

@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: nginx-blue
+  name: nginx-blue
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: nginx
+      color: blue
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: nginx
+        color: blue
+    spec:
+     containers:
+     - name: nginx
+       image: nginx
+       ports:
+         - containerPort: 80
+       volumeMounts:
+         - mountPath: /usr/share/nginx/html/index.html
+           name: nginx-conf
+           subPath: index.html
+     volumes:
+        - name: nginx-conf
+          configMap:
+            name: config

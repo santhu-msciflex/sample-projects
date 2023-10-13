@@ -1,0 +1,32 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  creationTimestamp: null
+  name: k8s-challenge-3
+spec:
+  jobTemplate:
+    metadata:
+      creationTimestamp: null
+      name: k8s-challenge-3
+    spec:
+      completions: 2  
+      template:
+        metadata:
+          creationTimestamp: null
+        spec:
+          volumes:
+          - name: task-pv-storage
+            persistentVolumeClaim:
+              claimName: task-pv-claim-3
+          containers:
+          - image: nginx
+            name: k8s-challenge-3
+            command: ["bin/sh", "-c", "hostname >> /tmp/vol/storage; sleep 60"]
+            volumeMounts:
+            - mountPath: "/tmp/vol"
+              name: task-pv-storage  
+            resources: {}
+          restartPolicy: OnFailure
+  schedule: '*/1 * * * *'
+  successfulJobsHistoryLimit: 4  
+status: {}

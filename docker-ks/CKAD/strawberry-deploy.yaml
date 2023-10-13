@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: strawberry-deploy
+  name: strawberry-deploy
+  namespace: straw
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: strawberry-deploy
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: strawberry-deploy
+    spec:
+      volumes:
+        - name: strawberry-log
+          persistentVolumeClaim:
+            claimName: strawberry-pvc
+      containers:
+      - image: nginx
+        name: nginx
+        volumeMounts:
+          - mountPath: "/tmp/berry-data"
+            name: strawberry-log

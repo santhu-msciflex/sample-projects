@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: question-5
+    client: user  
+  name: question-5
+  namespace: ggckad-s5
+spec:
+  strategy:
+    type: Recreate
+  replicas: 6
+  selector:
+    matchLabels:
+      app: revproxy
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: revproxy
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        resources: {}
+status: {}

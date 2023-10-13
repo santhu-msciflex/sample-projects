@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: busyboxnginx
+  name: busyboxnginx
+spec:
+  volumes:
+  - name: volume
+    emptyDir: {}
+  containers:
+  - image: nginx
+    name: nginx
+    volumeMounts:
+    - mountPath: /usr/share/nginx/html
+      name: volume  
+    ports:
+    - containerPort: 80
+  - args:
+    - bin/sh
+    - -c
+    - while true; do echo ‘Hi I am from Main container’ >> /var/log/index.html; sleep
+      5; done
+    image: busybox
+    name: busyboxnginx
+    volumeMounts:
+    - mountPath: /var/log
+      name: volume  
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Never
+status: {}

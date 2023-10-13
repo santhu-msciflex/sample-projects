@@ -1,0 +1,14 @@
+apiVersion: v1
+data:
+  app.properties: |+
+    user=san
+    pwd=abc
+    age=31
+
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2021-11-27T20:03:24Z"
+  name: cm-volume-test
+  namespace: default
+  resourceVersion: "1382409"
+  uid: d4fdfc6f-0f0b-4d13-8872-6e89b8ce4b81

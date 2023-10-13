@@ -1,0 +1,28 @@
+https://codeburst.io/kubernetes-ckad-weekly-challenges-overview-and-tips-7282b36a2681 - done
+C:\study\docker-ks\CKAD\dump
+https://github.com/dgkanatsios/CKAD-exercises
+	Go thru all closed and opened issues
+https://dev.to/liptanbiswas/ckad-practice-questions-4mpn
+https://dev.to/subodev/50-questions-for-ckad-and-cka-exam-3bjm
+https://github.com/dguyhasnoname/CKAD-TheHardWay/blob/master/exercises/basic/deployment.md
+https://www.study4exam.com/linux-foundation/free-ckad-questions
+https://github.com/bmuschko/ckad-crash-course#additional-resources
+https://thospfuller.com/2020/11/09/answers_to_five_kubernetes_ckad_practice_questions_2021/
+https://www.katacoda.com/liptanbiswas/courses/ckad-practice-challenges
+https://jayendrapatil.com/certified-kubernetes-application-developer-ckad-learning-path/
+https://medium.com/bb-tutorials-and-thoughts/practice-enough-with-these-questions-for-the-ckad-exam-2f42d1228552
+https://www.katacoda.com/liptanbiswas/courses/ckad-practice-challenges
+https://github.com/jsalcedo1987/kubernetes-zero-to-hero
+https://k8s-school.fr/resources/en/ckad-exercices/d.configuration/
+https://github.com/speedracer55/ckad-crash-course/tree/master/exercises
+
+watch -n 0.5 "kubectl config current-context; echo ''; kubectl config view | grep namespace; echo ''; kubectl get namespace,node,ingress,pod,svc,job,cronjob,deployment,rs,pv,pvc,secret,ep -o wide"
+
+
+Hi, In Killer.Sh one question is there where one POD is running with multiple dependencies and this needs to be created as part of the deployment.. In ans section it is mentioned there are multiple ways to do so.. What are the possible options we have to accomplish this question?
+
+Hi guys! Could be an issue to the exam if in LivenessProbe instead of tcpSocket I use httpGet?
+
+Services and Networking
+Application Observability and Maintenance
+Application Environment, Configuration and Security

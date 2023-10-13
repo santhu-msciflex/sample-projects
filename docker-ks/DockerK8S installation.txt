@@ -1,0 +1,68 @@
+Enable virtualization in BIOS.
+Install Windows Pro compatible docker desktop exe
+Install wsl_update_x64.msi to resolve the error while starting docker deamon.
+
+"Install K8S":
+Right-click the Docker tray icon
+Click "Settings"
+On the left panel click "Kubernetes"
+Check Enable Kubernetes and click "Apply"
+
+"Install Kubernetes Dashboard":
+Download the yaml configuration file from 
+    https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-rc7/aio/deploy/recommended.yaml
+Deploy it using kubectl apply -f .\recommended.yaml
+
+"Access the dashboard":
+Run the following command powershell (not cmd) ((kubectl -n kube-system describe secret default | Select-String "token:") -split " +")[1]
+Copy the generated token
+Run kubectl proxy
+Open the following link on your browser
+http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
+Select Token & paste the generated token
+Sign In
+
+"Run hello world app in K8S":
+kubectl apply -f https://k8s.io/examples/service/access/hello-application.yaml
+
+Display information about the Deployment:
+    - kubectl get deployments hello-world
+    - kubectl describe deployments hello-world
+    - kubectl get replicasets
+    - kubectl describe replicasets
+    
+Create a Service object that exposes the deployment:
+kubectl expose deployment hello-world --type=NodePort --name=example-service
+kubectl describe services example-service
+
+Access app running in K8S:
+curl http://<public-node-ip>:<node-port>
+
+
+Ingress Controller
+"Refer ingress-controller.yml" file
+
+Ingress is a kubernetes object which defines rules to forward incoming request to specific NodePorts/ClusterIPs.
+
+Need to install an implementation of Ingress in kubernetes cluster. These implementations are known as Ingress Controller.
+Below command installs Ingress Controller using kubectl. Helm also can be used to install Ingress controller.
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.41.2/deploy/static/provider/cloud/deploy.yaml
+
+Map hostname/URLs to Service names. This is same as rules in LB.
+Add an entry in etc/host for host name to IP address of ingress controller. 
+In cloud platform, Define a ELB and map to Ingress Controller IP.
+If you have mulitple services, have mulitple URL Paths configured in Ingress rule file.
+
+Deployment -> will have contrainerPort which is where container app running in a pod.
+		   -> A Deployment(pod) can have multiple containers (dependent)
+Service    -> It has its own IP and port(arbitrary). targetPort is the port where container is listerning to.
+		   -> A service can define multiple services one for each containers in pod.
+		   -> clusterIP(internal service) is only accessible inside cluster.
+		   -> NodePort is accessible from outside cluster(browser). 
+				-> IP address of worker node and NodePort.
+				-> This is not for production ready and only for testing.
+		   -> LoadBalancer
+		   -> Ingress (cloud LB points to Ingress Controller)
+				-> IngressController is an implementation of Ingress. (ex: nginx)
+				-> Ingress kind is rule mapping/routing
+				-> Since ingress is inside cluster, it can access pods via clusterIP service.

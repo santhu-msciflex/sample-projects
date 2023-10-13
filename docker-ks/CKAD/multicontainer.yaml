@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: multicontainer
+  name: multicontainer
+  namespace: "140"
+spec:
+  containers:
+  - args:
+    - bin/sh
+    - -c
+    - while true; do echo ‘Hi I am from Main container’ >> /var/log/index.html; sleep 5; done
+    image: busybox
+    name: multicontainer
+    volumeMounts:
+    - mountPath: /var/log
+      name: log-volume  
+  - name: nginx
+    image: nginx
+    volumeMounts:
+    - mountPath: /usr/share/nginx/html
+      name: log-volume  
+    ports:
+    - containerPort: 80  
+    resources: {}
+  volumes:
+  - name: log-volume
+    emptyDir: {}    
+  dnsPolicy: ClusterFirst
+  restartPolicy: Never
+status: {}

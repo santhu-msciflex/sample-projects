@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+      volumeMounts:
+      - name: nginx-volume
+        mountPath: /etc/cfg
+  volumes:
+    - name: nginx-volume
+      configMap:
+        name: cfgvolume

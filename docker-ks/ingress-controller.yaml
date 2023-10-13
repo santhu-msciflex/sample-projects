@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp
+spec:
+  minReadySeconds: 30
+  selector:
+    matchLabels:
+      app: webapp
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      containers:
+      - name: webapp
+        image: gcr.io/google-samples/node-hello:1.0        
+        ports:
+            - containerPort: 8080 # Port on which container runs
+              protocol: TCP
+--- 
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp-service
+
+spec:
+  selector: 
+    app: webapp
+  
+  ports:
+    - name: http
+      port: 8082 # Service's port, service has its own IP
+      nodePort: 30080 # only for NotPort > 30,000, can access pod externally (outside cluster)
+      targetPort: 8080 # Pods, container port
+      
+    
+  #type: NodePort #ClusterIP inside cluster
+  
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress 
+metadata:
+  name: webapp-ingress
+spec:
+  defaultBackend:
+    service:
+      name: webapp-service
+      port:
+        number: 8082
+  rules:
+  - host: santhosh.com
+    http:
+      paths:
+      - path: /Hello 
+        pathType: Prefix
+        backend:
+          service:
+            name:  webapp-service
+            port: 
+              number: 8082 # Service port.

@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  creationTimestamp: null
+  name: bananajob
+  namespace: banana
+spec:
+  completions: 5
+  parallelism: 3
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        eatyour: bananas
+    spec:
+      containers:
+      - image: busybox:1.31.0
+        name: banana-bin
+        command: ["bin/sh", "-c", "sleep 2; echo done"]  
+        resources: {}
+      restartPolicy: Never
+status: {}

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: strawberry-pv
+spec:
+  capacity:
+    storage: 10M 
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: exam
+  hostPath:
+    path: /Data/Berry

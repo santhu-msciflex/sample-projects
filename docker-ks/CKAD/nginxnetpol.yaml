@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: nginx05-network-policy
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      run: nginx05
+  policyTypes:
+  - Egress
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          run: redis05
+    - podSelector:
+        matchLabels:
+          run: httpd05        
